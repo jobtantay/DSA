@@ -45,7 +45,6 @@ void main()
     //Task 1:  Calls initVirtualHeap(), initlist() and displayList()  	
 	printf("\n\nTask 1: Initializes Virtual Heap and List. Displays the List");
 	printf("\n============================================================");
-	 
 	
    
     //Task 2: Calls insertFirst() 5x, and displayList()
@@ -106,7 +105,8 @@ void deallocSpace(VirtualHeap *VH, int ndx)
 {
     if(ndx >= 0 && ndx < SIZE){
         VH->Nodes[ndx].link = VH->Avail;
-        VH->Avail}
+        VH->Avail = ndx;
+    }
 }
 
 void displayVHeap(VirtualHeap VH)
