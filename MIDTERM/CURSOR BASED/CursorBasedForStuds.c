@@ -132,35 +132,68 @@ void displayVHeap(VirtualHeap VH)
 //  since -1 is not a valid array index.
 void initList(CBList *L)
 {
-
+    *L = -1;
 }
 
 //Display the elements of the list
 void displayList(CBList L, VirtualHeap VH)
 {
-	
+	CBList trav;
+    for(trav = L; trav != -1; trav = VH.Nodes[trav].link){
+        printf("%c ", VH.Nodes[trav].data);
+    }
 }
 
 //Inserts an element at the first position of the list
 void insertFirst(CBList *L, char elem, VirtualHeap *VH)
 {
-
+    if(VH->Avail != -1){
+        int temp = allocSpace(VH);
+        if(temp != -1){
+            VH->Nodes[temp].data = elem;
+            VH->Nodes[temp].link = *L;
+            *L = temp;
+        }
+    }
 }
 
 //Deletes the given element from the list
 void deleteElem(CBList *L, char elem, VirtualHeap *VH)
 {
-	
+	    if(*L != -1){
+        CBList *trav;
+        for(trav = L; *trav != -1 && VH->Nodes[*trav].data != elem; trav = &VH->Nodes[*trav].link){}
+        if(*trav != -1){
+        int temp = *trav;
+        *trav = -1;
+        deallocSpace(VH, temp);
+        }
+    }
 }
 
 //Inserts an element at the last position of the given list
 void insertLast(CBList *L, char elem, VirtualHeap *VH)
 {
-	
-}
+    if(VH->Avail != -1){
+        CBList *trav, temp;
+        for(trav = L; *trav != -1; trav = &VH->Nodes[*trav].link){}
+
+            temp = allocSpace(VH);
+            if(temp != -1){
+            VH->Nodes[temp].data = elem;
+            VH->Nodes[temp].link = *trav;
+            *trav = temp;
+            }
+        }
+ }
+
 
 //Returns True if the given element is in the list; otherwise returns False
 Boolean isMember(CBList L, char elem, VirtualHeap VH)
 {
-	
+	if(L != -1){
+        CBList trav;
+        for(trav = L; trav != -1 && VH.Nodes[trav].data != elem; trav = VH.Nodes[trav].link){}
+        return(trav != -1)? True : False;
+    }
 }
